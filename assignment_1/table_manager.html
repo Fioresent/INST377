@@ -1,3 +1,5 @@
+<!-- Danny Chiang, INST 377 MWF 11:00 - 11:50am -->
+
 <html>
 <head>
 <!-- CSS -->
@@ -200,15 +202,130 @@ var organizations = [
 
 <body>
 <!-- Feel free to add empty tags. Data shouldn't be here. -->
-	<div id="org_table"></div>
-
+	<div id="org_table"></div> 
 <script>
 // outputs the first item of the organizations array. Just for testing.
-// console.log(organizations[0]); 
+console.log(organizations[0]["Organization Type"]);
 console.log("test");
+console.log(organizations.length);
 
 // Your JavaScript code goes here
 
+  var body = document.getElementById("org_table");
+ 
+  var tbl = document.createElement("table");
+  var tblBody = document.createElement("tbody");
+
+ 
+  //Creating table cells
+  for (var i = 0; i < 5; i++) {
+    //Creating table rows
+    var row = document.createElement("tr");
+
+
+    for (var j = 0; j < 2; j++){
+         var cell = document.createElement("td");
+         
+         //Creating the labels
+         if(j == 0){
+             if(i == 0){
+                var cellText = document.createTextNode("Number of Non-profit Orgs:");
+             }
+
+             else if(i == 1){
+                var cellText = document.createTextNode("Number of Orgs Less Than 10 Years Old:");
+             }
+
+             else if(i == 2){
+                var cellText = document.createTextNode("Number of North American Orgs:");
+             }
+
+             else if(i == 3){
+                var cellText = document.createTextNode("Number of Orgs used Transportation Data:");
+             }
+             else{
+                var cellText = document.createTextNode("Number of For-profit Orgs in High Income Countries:");
+             }
+         }
+
+         //Creating the data
+         if(j == 1){
+            //Number of non-profit orgs
+             if(i == 0){
+                var count = 0;
+
+                for( var k = 0; k < organizations.length; k++){
+                    if(organizations[k]["Organization Type"] == "Nonprofit"){
+                        count++;
+                    }
+                }
+
+                var cellText = document.createTextNode(count.toString()); 
+             }
+
+             //Number of orgs less than 10 years old
+             else if(i == 1){
+                var count = 0;
+
+                for( var k = 0; k < organizations.length; k++){
+                    if(parseInt(organizations[k]["Founding Year"], 10) > 2008){
+                        count++;
+                    }
+                }
+                var cellText = document.createTextNode(count.toString()); 
+             }
+
+             //Number of North American orgs
+             else if(i == 2){
+                var count = 0;
+
+                for( var k = 0; k < organizations.length; k++){
+                    if(organizations[k]["Region"] == "North America"){
+                        count++;
+                    }
+                }
+
+                var cellText = document.createTextNode(count.toString()); 
+             }
+
+             //Number of orgs using transportation data
+             else if(i == 3){
+                var count = 0;
+
+                for( var k = 0; k < organizations.length; k++){
+                    if(organizations[k]["Type of Data Used"].includes("Transportation")){
+                        count++;
+                    }
+                }
+
+                var cellText = document.createTextNode(count.toString()); 
+             }
+
+
+             else{
+
+                for( var k = 0; k < organizations.length; k++){
+                    if(organizations[k]["Organization Type"] == "For-profit" 
+                        && organizations[k]["County Income Level"] == "High income"){
+                        count++;
+                    }
+                }
+
+                var cellText = document.createTextNode(count.toString()); 
+             }
+         }
+
+         cell.appendChild(cellText);
+         row.appendChild(cell);
+
+    }
+ 
+    tblBody.appendChild(row);
+  }
+ 
+  tbl.appendChild(tblBody);
+  body.appendChild(tbl);
+  tbl.setAttribute("border", "2");
 
 </script>
 
